@@ -1,7 +1,7 @@
 package main
 
 import (
-	lib "github.com/dineshr93/sw360API/lib"
+	lib "github.com/dineshr93/sw360api/lib"
 )
 
 var (

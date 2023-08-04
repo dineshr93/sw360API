@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/dineshr93/sw360api/lib/model"
+
 	yaml "gopkg.in/yaml.v3"
 )
 
@@ -51,7 +53,7 @@ func Sw360(configfile string) {
 		log.Fatalln("Couln't read response body")
 	}
 
-	var project Project
+	var project model.Project
 
 	err = json.Unmarshal(databytes, &project)
 	if err != nil {

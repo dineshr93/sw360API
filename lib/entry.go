@@ -201,9 +201,10 @@ func (c *Config) GetProjectDetails(pjname string, version string) any {
 	for _, p := range Sw360Projects {
 		if strings.ToLower(p.Name) == strings.ToLower(pjname) && strings.ToLower(p.Version) == strings.ToLower(version) {
 			fmt.Println(prettyPrint(p))
+			return p
 		}
 	}
-	return p
+	return nil
 }
 func prettyPrint(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")

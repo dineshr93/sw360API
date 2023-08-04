@@ -1,5 +1,5 @@
-github.com/dineshr93/sw360api/lib v0.0.0-20230804225530-c1eeb2e6caa8 h1:YKUy3Sd2mSk3RQyNuMpGF9R3xjluhdPVggqgwz6WHd4=
-github.com/dineshr93/sw360api/lib v0.0.0-20230804225530-c1eeb2e6caa8/go.mod h1:WnVK3oxw2W2V2V/qOpwbyEH2p5MQ5Vd2wT48GhvRdVs=
+github.com/dineshr93/sw360api/lib v0.0.0-20230804230027-8d30d7155cab h1:apIHK7Xu6flGb0LrYq58P9hYezMxvlGdctJ7d3ZlVqw=
+github.com/dineshr93/sw360api/lib v0.0.0-20230804230027-8d30d7155cab/go.mod h1:WnVK3oxw2W2V2V/qOpwbyEH2p5MQ5Vd2wT48GhvRdVs=
 github.com/dineshr93/sw360api/lib/model v0.0.0-20230804223229-03f31dc264df h1:KjDjSd0L3jsbN4AvBR81gCOezJONpWr8rYoxpuIAiiE=
 github.com/dineshr93/sw360api/lib/model v0.0.0-20230804223229-03f31dc264df/go.mod h1:GbQjcX36xhtbwrnpN5YByZEgnPyXY3W0AlABxWKVBTc=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=

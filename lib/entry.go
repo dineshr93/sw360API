@@ -30,19 +30,26 @@ var (
 )
 
 func Sw360(configfile string) *Config {
+	fmt.Println("
+	░██████╗░██╗░░░░░░░██╗██████╗░░█████╗░░█████╗░  ░█████╗░██████╗░██╗
+	██╔════╝░██║░░██╗░░██║╚════██╗██╔═══╝░██╔══██╗  ██╔══██╗██╔══██╗██║
+	╚█████╗░░╚██╗████╗██╔╝░█████╔╝██████╗░██║░░██║  ███████║██████╔╝██║
+	░╚═══██╗░░████╔═████║░░╚═══██╗██╔══██╗██║░░██║  ██╔══██║██╔═══╝░██║
+	██████╔╝░░╚██╔╝░╚██╔╝░██████╔╝╚█████╔╝╚█████╔╝  ██║░░██║██║░░░░░██║
+	╚═════╝░░░░╚═╝░░░╚═╝░░╚═════╝░░╚════╝░░╚════╝░  ╚═╝░░╚═╝╚═╝░░░░░╚═╝")
 	cfg := LoadConfig(configfile)
 
-	API_URL := cfg.API
-	Token := cfg.Token
-	log.Println(API_URL)
-	log.Println(Token)
+	// API_URL := cfg.API
+	// Token := cfg.Token
+	// log.Println(API_URL)
+	// log.Println(Token)
 
 	return cfg
 }
 func LoadConfig(config string) *Config {
 	var cfg Config = Config{}
 	if _, err := os.Stat("./" + config); err == nil {
-		log.Println("Config file " + config + " exists")
+		log.Println("Using Config file " + config)
 		// if file exists
 		f, err := os.Open("./" + config)
 		if err != nil {

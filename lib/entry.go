@@ -145,7 +145,7 @@ func (c *Config) FindProjectswithName(pjnameguess string) (int, []string) {
 		if strings.Contains(p.Name, pjnameguess) {
 			i++
 			count = i
-			nv := strconv.Itoa(i) + p.Name + p.Version
+			nv := strconv.Itoa(i) + ". " + p.Name + " " + p.Version
 			names = append(names, nv)
 
 		}

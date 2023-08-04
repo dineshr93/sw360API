@@ -24,10 +24,12 @@ func main() {
 
 	fmt.Println("No of projects in server: ", apicfg.GetTotalProjects())
 
-	no, names := apicfg.FindProjectswithName("ast")
+	no, names := apicfg.FindProjectswithName("AST")
 
 	fmt.Println("No of projects matched is: ", no)
 
-	fmt.Println(names)
+	for _, name := range names {
+		fmt.Println(name)
+	}
 
 }

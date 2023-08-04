@@ -164,3 +164,48 @@ func (c *Config) FindProjectswithName(pjnameguess string) (int, []string) {
 	return count, names
 
 }
+
+func (c *Config) GetProjectDetails(pjname string, version string) {
+
+	req, err := http.NewRequest(http.MethodGet, c.API+"projects?allDetails=true", nil)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+	req.Header.Add(contenttype, apphaljson)
+	req.Header.Add(Authorization, c.Token)
+
+	// Create an HTTP client
+	client := &http.Client{}
+
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatalln("error while client.Do(req)")
+	}
+
+	databytes, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatalln("Couln't read response body")
+	}
+
+	var project model.Project
+
+	err = json.Unmarshal(databytes, &project)
+	if err != nil {
+		log.Fatalln("Error while unmarshalling json")
+	}
+
+	// log.Println(len(project.Embedded.Sw360Projects))
+	Sw360Projects := project.Embedded.Sw360Projects
+
+	for _, p := range Sw360Projects {
+		if strings.ToLower(p.Name) == strings.ToLower(pjname) && strings.ToLower(p.Version) == strings.ToLower(version) {
+			prettyPrint(p)
+		}
+	}
+
+}
+func prettyPrint(i interface{}) string {
+	s, _ := json.MarshalIndent(i, "", "\t")
+	return string(s)
+}

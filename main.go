@@ -24,12 +24,14 @@ func main() {
 
 	fmt.Println("No of projects in server: ", apicfg.GetTotalProjects())
 
-	no, names := apicfg.FindProjectswithName("zf")
+	no, names := apicfg.FindProjectswithName("ada")
 
 	fmt.Println("No of projects matched is: ", no)
 
 	for _, name := range names {
 		fmt.Println(name)
 	}
+
+	apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
 
 }

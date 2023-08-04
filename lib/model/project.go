@@ -1,18 +1,5 @@
 package model
 
-type Project struct {
-	Embedded struct {
-		Sw360Projects []ProjectDetail `json:"sw360:projects"`
-	} `json:"_embedded"`
-	Links struct {
-		Curies []struct {
-			Href      string `json:"href"`
-			Name      string `json:"name"`
-			Templated bool   `json:"templated"`
-		} `json:"curies"`
-	} `json:"_links"`
-}
-
 type ProjectDetail struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`
@@ -69,4 +56,17 @@ type ProjectDetail struct {
 		CreatedBy    string `json:"createdBy"`
 	} `json:"_embedded"`
 	VendorID string `json:"vendorId,omitempty"`
+}
+
+type Project struct {
+	Embedded struct {
+		Sw360Projects []ProjectDetail `json:"sw360:projects"`
+	} `json:"_embedded"`
+	Links struct {
+		Curies []struct {
+			Href      string `json:"href"`
+			Name      string `json:"name"`
+			Templated bool   `json:"templated"`
+		} `json:"curies"`
+	} `json:"_links"`
 }

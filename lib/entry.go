@@ -141,11 +141,11 @@ func (c *Config) FindProjectswithName(pjnameguess string) (int, []string) {
 
 	count := 0
 
-	for i, p := range Sw360Projects {
+	for _, p := range Sw360Projects {
 		if strings.Contains(p.Name, pjnameguess) {
-			i++
-			count = i
-			nv := strconv.Itoa(i) + ". " + p.Name + " " + p.Version
+
+			count++
+			nv := strconv.Itoa(count) + ". " + p.Name + " " + p.Version
 			names = append(names, nv)
 
 		}

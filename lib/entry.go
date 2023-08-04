@@ -204,7 +204,9 @@ func (c *Config) GetProjectDetails(pjname string, version string) (error, *model
 			return nil, &p
 		}
 	}
-	return errors.New("No project details found for " + pjname + " " + version), &model.ProjectDetail{}
+
+	pjd := &model.ProjectDetail{}
+	return errors.New("No project details found for " + pjname + " " + version), pjd
 }
 func prettyPrint(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")

@@ -165,7 +165,7 @@ func (c *Config) FindProjectswithName(pjnameguess string) (int, []string) {
 
 }
 
-func (c *Config) GetProjectDetails(pjname string, version string) {
+func (c *Config) GetProjectDetails(pjname string, version string) any {
 
 	req, err := http.NewRequest(http.MethodGet, c.API+"projects?allDetails=true", nil)
 
@@ -200,10 +200,10 @@ func (c *Config) GetProjectDetails(pjname string, version string) {
 
 	for _, p := range Sw360Projects {
 		if strings.ToLower(p.Name) == strings.ToLower(pjname) && strings.ToLower(p.Version) == strings.ToLower(version) {
-			prettyPrint(p)
+			fmt.Println(prettyPrint(p))
 		}
 	}
-
+	return p
 }
 func prettyPrint(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")

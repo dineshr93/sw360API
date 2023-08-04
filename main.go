@@ -32,6 +32,6 @@ func main() {
 		fmt.Println(name)
 	}
 
-	apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
+	fmt.Println(apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500"))
 
 }

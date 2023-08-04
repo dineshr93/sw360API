@@ -1,6 +1,8 @@
 package main
 
-import "github.com/dineshr93/sw360API/lib"
+import (
+	lib "github.com/dineshr93/sw360API/lib"
+)
 
 var (
 	configfile    = "config.yml"

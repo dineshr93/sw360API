@@ -1,4 +1,4 @@
-module github.com/dineshr93/sw360API/lib
+module github.com/dineshr93/sw360api/lib
 
 go 1.20
 

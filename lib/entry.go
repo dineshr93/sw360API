@@ -5,6 +5,8 @@ import (
 	"errors"
 	"io"
 	"log"
+	"strconv"
+	"strings"
 
 	"net/http"
 	"os"
@@ -36,6 +38,31 @@ func Sw360(configfile string) *Config {
 	log.Println(Token)
 
 	return cfg
+}
+func LoadConfig(config string) *Config {
+	var cfg Config = Config{}
+	if _, err := os.Stat("./" + config); err == nil {
+		log.Println("Config file " + config + " exists")
+		// if file exists
+		f, err := os.Open("./" + config)
+		if err != nil {
+			log.Println(err)
+		}
+		defer f.Close()
+
+		decoder := yaml.NewDecoder(f)
+		err = decoder.Decode(&cfg)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+	} else if errors.Is(err, os.ErrNotExist) {
+		// path/to/whatever does *not* exist
+		log.Fatalln("./" + config + " File does *not* exist")
+
+	}
+
+	return &cfg
 }
 
 type Config struct {
@@ -78,28 +105,52 @@ func (c *Config) GetTotalProjects() int {
 
 }
 
-func LoadConfig(config string) *Config {
-	var cfg Config = Config{}
-	if _, err := os.Stat("./" + config); err == nil {
-		log.Println("Config file " + config + " exists")
-		// if file exists
-		f, err := os.Open("./" + config)
-		if err != nil {
-			log.Println(err)
-		}
-		defer f.Close()
+func (c *Config) FindProjectswithName(pjnameguess string) (int, []string) {
 
-		decoder := yaml.NewDecoder(f)
-		err = decoder.Decode(&cfg)
-		if err != nil {
-			log.Fatalln(err)
-		}
+	req, err := http.NewRequest(http.MethodGet, c.API+"projects", nil)
 
-	} else if errors.Is(err, os.ErrNotExist) {
-		// path/to/whatever does *not* exist
-		log.Fatalln("./" + config + " File does *not* exist")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	req.Header.Add(contenttype, apphaljson)
+	req.Header.Add(Authorization, c.Token)
 
+	// Create an HTTP client
+	client := &http.Client{}
+
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatalln("error while client.Do(req)")
 	}
 
-	return &cfg
+	databytes, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatalln("Couln't read response body")
+	}
+
+	var project model.Project
+
+	err = json.Unmarshal(databytes, &project)
+	if err != nil {
+		log.Fatalln("Error while unmarshalling json")
+	}
+
+	// log.Println(len(project.Embedded.Sw360Projects))
+	Sw360Projects := project.Embedded.Sw360Projects
+	var names []string
+
+	count := 0
+
+	for i, p := range Sw360Projects {
+		if strings.Contains(p.Name, pjnameguess) {
+			i++
+			count = i
+			nv := strconv.Itoa(i) + p.Name + p.Version
+			names = append(names, nv)
+
+		}
+	}
+
+	return count, names
+
 }

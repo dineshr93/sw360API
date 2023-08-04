@@ -45,18 +45,21 @@ type Config struct {
 
 func (c *Config) GetTotalProjects() {
 
-	req, err := http.NewRequest(http.MethodGet, API_URL+"projects", nil)
+	req, err := http.NewRequest(http.MethodGet, c.API+"projects", nil)
 
 	if err != nil {
 		log.Fatalln(err)
 	}
 	req.Header.Add(contenttype, apphaljson)
-	req.Header.Add(Authorization, Token)
+	req.Header.Add(Authorization, c.Token)
 
 	// Create an HTTP client
 	client := &http.Client{}
 
 	res, err := client.Do(req)
+	if err != nil {
+		log.Fatalln("error while client.Do(req)")
+	}
 
 	databytes, err := io.ReadAll(res.Body)
 	if err != nil {

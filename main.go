@@ -24,7 +24,7 @@ func main() {
 
 	fmt.Println("No of projects in server: ", apicfg.GetTotalProjects())
 
-	no, names := apicfg.FindProjectswithName("AST")
+	no, names := apicfg.FindProjectswithName("zf")
 
 	fmt.Println("No of projects matched is: ", no)
 

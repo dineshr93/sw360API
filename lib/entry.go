@@ -43,7 +43,7 @@ type Config struct {
 	Token string `yaml:"token"`
 }
 
-func (c *Config) GetTotalProjects() {
+func (c *Config) GetTotalProjects() int {
 
 	req, err := http.NewRequest(http.MethodGet, c.API+"projects", nil)
 
@@ -73,7 +73,8 @@ func (c *Config) GetTotalProjects() {
 		log.Fatalln("Error while unmarshalling json")
 	}
 
-	log.Println(len(project.Embedded.Sw360Projects))
+	// log.Println(len(project.Embedded.Sw360Projects))
+	return len(project.Embedded.Sw360Projects)
 
 }
 

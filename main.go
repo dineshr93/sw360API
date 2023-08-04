@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	lib "github.com/dineshr93/sw360api/lib"
 )
 
@@ -20,6 +22,6 @@ var (
 func main() {
 	apicfg := lib.Sw360(configfile)
 
-	apicfg.GetTotalProjects()
+	fmt.Println("No of projects in server: ", apicfg.GetTotalProjects())
 
 }

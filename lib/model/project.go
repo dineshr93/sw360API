@@ -1,4 +1,4 @@
-package lib
+package model
 
 type Project struct {
 	Embedded struct {

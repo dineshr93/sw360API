@@ -27,13 +27,23 @@ var (
 	Token   = ""
 )
 
-func Sw360(configfile string) {
+func Sw360(configfile string) *Config {
 	cfg := LoadConfig(configfile)
 
 	API_URL := cfg.API
 	Token := cfg.Token
 	log.Println(API_URL)
 	log.Println(Token)
+
+	return cfg
+}
+
+type Config struct {
+	API   string `yaml:"api"`
+	Token string `yaml:"token"`
+}
+
+func (c *Config) getTotalProjects() {
 
 	req, err := http.NewRequest(http.MethodGet, API_URL+"projects", nil)
 
@@ -62,11 +72,6 @@ func Sw360(configfile string) {
 
 	log.Println(len(project.Embedded.Sw360Projects))
 
-}
-
-type Config struct {
-	API   string `yaml:"api"`
-	Token string `yaml:"token"`
 }
 
 func LoadConfig(config string) *Config {

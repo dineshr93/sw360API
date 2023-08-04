@@ -18,5 +18,8 @@ var (
 )
 
 func main() {
-	lib.Sw360(configfile)
+	apicfg := lib.Sw360(configfile)
+
+	apicfg.getTotalProjects()
+
 }

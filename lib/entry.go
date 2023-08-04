@@ -43,7 +43,7 @@ type Config struct {
 	Token string `yaml:"token"`
 }
 
-func (c *Config) getTotalProjects() {
+func (c *Config) GetTotalProjects() {
 
 	req, err := http.NewRequest(http.MethodGet, API_URL+"projects", nil)
 

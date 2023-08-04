@@ -20,6 +20,6 @@ var (
 func main() {
 	apicfg := lib.Sw360(configfile)
 
-	apicfg.getTotalProjects()
+	apicfg.GetTotalProjects()
 
 }

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"io"
 	"log"
-	"model"
+
 	"net/http"
 	"os"
 
@@ -51,7 +51,7 @@ func Sw360(configfile string) {
 		log.Fatalln("Couln't read response body")
 	}
 
-	var project model.Project
+	var project Project
 
 	err = json.Unmarshal(databytes, &project)
 	if err != nil {

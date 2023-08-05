@@ -33,12 +33,13 @@ func main() {
 		fmt.Println(name)
 	}
 
-	err, data := apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
+	// err, data := apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
+	err, data := apicfg.GetProjectDetails("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln("Error getting details for given project")
 	} else {
 
-		fmt.Println(data.Name)
+		fmt.Println(data.LinkedProjects)
 	}
 
 }

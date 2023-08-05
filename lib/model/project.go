@@ -1,5 +1,11 @@
 package model
 
+type LinkedProjects struct {
+	Project   string `json:"project"`
+	EnableSvm string `json:"enableSvm"`
+	Relation  string `json:"relation"`
+}
+
 type ProjectDetail struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`
@@ -17,27 +23,27 @@ type ProjectDetail struct {
 	ProjectResponsible string `json:"projectResponsible,omitempty"`
 	Roles              struct {
 	} `json:"roles,omitempty"`
-	SecurityResponsibles          []interface{} `json:"securityResponsibles"`
-	ProjectOwner                  string        `json:"projectOwner,omitempty"`
-	OwnerAccountingUnit           string        `json:"ownerAccountingUnit,omitempty"`
-	OwnerGroup                    string        `json:"ownerGroup,omitempty"`
-	OwnerCountry                  string        `json:"ownerCountry,omitempty"`
-	PreevaluationDeadline         string        `json:"preevaluationDeadline,omitempty"`
-	SystemTestStart               string        `json:"systemTestStart,omitempty"`
-	SystemTestEnd                 string        `json:"systemTestEnd,omitempty"`
-	DeliveryStart                 string        `json:"deliveryStart,omitempty"`
-	PhaseOutSince                 string        `json:"phaseOutSince,omitempty"`
-	EnableSvm                     bool          `json:"enableSvm"`
-	EnableVulnerabilitiesDisplay  bool          `json:"enableVulnerabilitiesDisplay"`
-	ClearingSummary               string        `json:"clearingSummary,omitempty"`
-	SpecialRisksOSS               string        `json:"specialRisksOSS,omitempty"`
-	GeneralRisks3RdParty          string        `json:"generalRisks3rdParty,omitempty"`
-	SpecialRisks3RdParty          string        `json:"specialRisks3rdParty,omitempty"`
-	DeliveryChannels              string        `json:"deliveryChannels,omitempty"`
-	RemarksAdditionalRequirements string        `json:"remarksAdditionalRequirements,omitempty"`
-	ProjectType                   string        `json:"projectType"`
-	Visibility                    string        `json:"visibility"`
-	LinkedProjects                []interface{} `json:"linkedProjects,omitempty"`
+	SecurityResponsibles          []interface{}    `json:"securityResponsibles"`
+	ProjectOwner                  string           `json:"projectOwner,omitempty"`
+	OwnerAccountingUnit           string           `json:"ownerAccountingUnit,omitempty"`
+	OwnerGroup                    string           `json:"ownerGroup,omitempty"`
+	OwnerCountry                  string           `json:"ownerCountry,omitempty"`
+	PreevaluationDeadline         string           `json:"preevaluationDeadline,omitempty"`
+	SystemTestStart               string           `json:"systemTestStart,omitempty"`
+	SystemTestEnd                 string           `json:"systemTestEnd,omitempty"`
+	DeliveryStart                 string           `json:"deliveryStart,omitempty"`
+	PhaseOutSince                 string           `json:"phaseOutSince,omitempty"`
+	EnableSvm                     bool             `json:"enableSvm"`
+	EnableVulnerabilitiesDisplay  bool             `json:"enableVulnerabilitiesDisplay"`
+	ClearingSummary               string           `json:"clearingSummary,omitempty"`
+	SpecialRisksOSS               string           `json:"specialRisksOSS,omitempty"`
+	GeneralRisks3RdParty          string           `json:"generalRisks3rdParty,omitempty"`
+	SpecialRisks3RdParty          string           `json:"specialRisks3rdParty,omitempty"`
+	DeliveryChannels              string           `json:"deliveryChannels,omitempty"`
+	RemarksAdditionalRequirements string           `json:"remarksAdditionalRequirements,omitempty"`
+	ProjectType                   string           `json:"projectType"`
+	Visibility                    string           `json:"visibility"`
+	LinkedProjects                []LinkedProjects `json:"linkedProjects,omitempty"`
 	LinkedReleases                []struct {
 		CreatedBy     string `json:"createdBy"`
 		Release       string `json:"release"`

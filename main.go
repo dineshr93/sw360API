@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	lib "github.com/dineshr93/sw360api/lib"
 )
@@ -32,8 +33,12 @@ func main() {
 		fmt.Println(name)
 	}
 
-	v := apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
+	err, data := apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
+	if err != nil {
+		log.Fatalln("Error getting details for given project")
+	} else {
 
-	fmt.Println(v.)
+		fmt.Println(data.Name)
+	}
 
 }

@@ -268,6 +268,68 @@ func (c *Config) GetLinkedReleases(pjname string, version string) (error, *[]mod
 	return nil, &releases
 }
 
+func (c *Config) GetLinkedReleasesTransitive(pjname string, version string) (error, *[]model.Release) {
+	err, projectlink := c.GetProjectlink(pjname, version)
+	if err != nil {
+		log.Fatalln(err)
+		return errors.New("No projectlink found for " + pjname + " " + version), nil
+	}
+
+	req, err := http.NewRequest(http.MethodGet, projectlink+"/releases?transitive=true", nil)
+	if err != nil {
+		log.Fatalln("error in request preparation in GetLinkedReleasesTransitive")
+	}
+	req.Header.Add(contenttype, apphaljson)
+	req.Header.Add(Authorization, c.Token)
+	// Create an HTTP client
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatalln("error while client.Do(req) in GetLinkedReleasesTransitive")
+	}
+	databytes, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatalln("Couln't read response body")
+	}
+	var releaseshort model.SW360ReleaseShort
+	err = json.Unmarshal(databytes, &releaseshort)
+	if err != nil {
+		log.Fatalln("Error while unmarshalling json")
+	}
+
+	linkedReleases := releaseshort.Embedded.Sw360Releases
+
+	var releases []model.Release
+	if len(linkedReleases) == 0 {
+		return errors.New("No release details found for " + pjname + " " + version), nil
+	}
+	// loop through all the release
+	for _, linkedRelease := range linkedReleases {
+		releaselink := linkedRelease.Links.Self.Href
+		req, err := http.NewRequest(http.MethodGet, releaselink, nil)
+		if err != nil {
+			log.Fatalln("error in releaselink")
+		}
+		req.Header.Add(contenttype, apphaljson)
+		req.Header.Add(Authorization, c.Token)
+		res, err := client.Do(req)
+		if err != nil {
+			log.Fatalln("error while client.Do(req) in GetLinkedReleases")
+		}
+		databytes, err := io.ReadAll(res.Body)
+		if err != nil {
+			log.Fatalln("Couln't read response body")
+		}
+		var release model.Release
+		err = json.Unmarshal(databytes, &release)
+		if err != nil {
+			log.Fatalln("Error while unmarshalling json")
+		}
+		releases = append(releases, release)
+	}
+	return nil, &releases
+}
+
 func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]model.Sw360Project) {
 	err, projectDetail := c.GetProjectDetails(pjname, version)
 	if err != nil {

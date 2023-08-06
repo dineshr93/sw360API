@@ -66,5 +66,25 @@ func main() {
 			fmt.Println(strconv.Itoa(i), project.Name, " ", project.Version)
 		}
 	}
+	// ========================================
+	err, projectlink := apicfg.GetProjectlink("gradle_single", "1.0")
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		fmt.Println(projectlink)
+	}
+	// ========================================
+	err, releases := apicfg.GetLinkedReleasesTransitive("gradle_single", "1.0")
+	if err != nil {
+		log.Fatalln(err)
+	} else {
 
+		for i, release := range *releases {
+			i++
+
+			fmt.Println(strconv.Itoa(i), release.Name, " ", release.Version)
+		}
+	}
+	// ========================================
+	// ========================================
 }

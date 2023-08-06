@@ -1,5 +1,26 @@
 package model
 
+type SW360ReleaseShort struct {
+	Embedded struct {
+		Sw360Releases []struct {
+			Name    string `json:"name,omitempty"`
+			Version string `json:"version,omitempty"`
+			Links   struct {
+				Self struct {
+					Href string `json:"href,omitempty"`
+				} `json:"self,omitempty"`
+			} `json:"_links,omitempty"`
+		} `json:"sw360:releases,omitempty"`
+	} `json:"_embedded,omitempty"`
+	Links struct {
+		Curies []struct {
+			Href      string `json:"href,omitempty"`
+			Name      string `json:"name,omitempty"`
+			Templated bool   `json:"templated,omitempty"`
+		} `json:"curies,omitempty"`
+	} `json:"_links,omitempty"`
+}
+
 type Release struct {
 	Name                  string         `json:"name,omitempty"`
 	Version               string         `json:"version,omitempty"`

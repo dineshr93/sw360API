@@ -216,7 +216,7 @@ func (c *Config) GetProjectDetails(pjname string, version string) (error, *model
 func (c *Config) GetLinkedReleases(pjname string, version string) (error, *[]model.Release) {
 	err, projectDetail := c.GetProjectDetails(pjname, version)
 	if err != nil {
-		log.Fatalln("Error while getting project details in GetProjectReleases")
+		log.Fatalln("Error while getting project details in GetLinkedReleases")
 	}
 	linkedReleases := projectDetail.LinkedReleases
 	// Create an HTTP client
@@ -236,7 +236,7 @@ func (c *Config) GetLinkedReleases(pjname string, version string) (error, *[]mod
 		req.Header.Add(Authorization, c.Token)
 		res, err := client.Do(req)
 		if err != nil {
-			log.Fatalln("error while client.Do(req) in GetProjectReleases")
+			log.Fatalln("error while client.Do(req) in GetLinkedReleases")
 		}
 		databytes, err := io.ReadAll(res.Body)
 		if err != nil {
@@ -250,4 +250,43 @@ func (c *Config) GetLinkedReleases(pjname string, version string) (error, *[]mod
 		releases = append(releases, release)
 	}
 	return nil, &releases
+}
+
+func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]model.Project) {
+	err, projectDetail := c.GetProjectDetails(pjname, version)
+	if err != nil {
+		log.Fatalln("Error while getting project details in GetLinkedProjects")
+	}
+	linkedProjects := projectDetail.LinkedProjects
+	// Create an HTTP client
+	client := &http.Client{}
+	var projects []model.Project
+	if len(linkedProjects) == 0 {
+		return errors.New("No release details found for " + pjname + " " + version), nil
+	}
+	// loop through all the release
+	for _, linkedProject := range linkedProjects {
+		projectlink := linkedProject.Project
+		req, err := http.NewRequest(http.MethodGet, projectlink+"projects?allDetails=true", nil)
+		if err != nil {
+			log.Fatalln("error in projectlink")
+		}
+		req.Header.Add(contenttype, apphaljson)
+		req.Header.Add(Authorization, c.Token)
+		res, err := client.Do(req)
+		if err != nil {
+			log.Fatalln("error while client.Do(req) in GetLinkedProjects")
+		}
+		databytes, err := io.ReadAll(res.Body)
+		if err != nil {
+			log.Fatalln("Couln't read response body")
+		}
+		var project model.Project
+		err = json.Unmarshal(databytes, &project)
+		if err != nil {
+			log.Fatalln("Error while unmarshalling json")
+		}
+		projects = append(projects, project)
+	}
+	return nil, &projects
 }

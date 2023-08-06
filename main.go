@@ -26,6 +26,7 @@ func main() {
 
 	fmt.Println("No of projects in server: ", apicfg.GetTotalProjects())
 
+	// ========================================
 	no, names := apicfg.FindProjectswithName("ada")
 
 	fmt.Println("No of projects matched is: ", no)
@@ -34,15 +35,16 @@ func main() {
 		fmt.Println(name)
 	}
 
+	// ========================================
 	// err, data := apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
-	err, data := apicfg.GetProjectDetails("gradle_single", "1.0")
+	err, ProjectDetail := apicfg.GetProjectDetails("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln("Error getting details for given project")
 	} else {
 
-		fmt.Println(data.LinkedProjects)
+		fmt.Println(ProjectDetail.LinkedProjects)
 	}
-
+	// ========================================
 	err, releases := apicfg.GetLinkedReleases("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
@@ -52,6 +54,16 @@ func main() {
 			i++
 
 			fmt.Println(strconv.Itoa(i), release.Name, " ", release.Version)
+		}
+	}
+	// ========================================
+	err, projects := apicfg.GetLinkedProjects("gradle_single", "1.0")
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		for i, project := range *projects {
+			i++
+			fmt.Println(strconv.Itoa(i), project.Name, " ", project.Version)
 		}
 	}
 

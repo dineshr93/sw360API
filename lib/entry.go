@@ -75,6 +75,12 @@ func LoadConfig(config string) *Config {
 	return &cfg
 }
 
+func prettyPrint(i interface{}) string {
+	s, _ := json.MarshalIndent(i, "", "\t")
+	return string(s)
+}
+
+// ============================== API =======================================
 type Config struct {
 	API   string `yaml:"api"`
 	Token string `yaml:"token"`
@@ -112,7 +118,6 @@ func (c *Config) GetTotalProjects() int {
 
 	// log.Println(len(project.Embedded.Sw360Projects))
 	return len(project.Embedded.Sw360Projects)
-
 }
 
 func (c *Config) FindProjectswithName(pjnameguess string) (int, []string) {
@@ -162,7 +167,6 @@ func (c *Config) FindProjectswithName(pjnameguess string) (int, []string) {
 	}
 
 	return count, names
-
 }
 
 func (c *Config) GetProjectDetails(pjname string, version string) (error, *model.ProjectDetail) {
@@ -208,7 +212,42 @@ func (c *Config) GetProjectDetails(pjname string, version string) (error, *model
 	pjd := &model.ProjectDetail{}
 	return errors.New("No project details found for " + pjname + " " + version), pjd
 }
-func prettyPrint(i interface{}) string {
-	s, _ := json.MarshalIndent(i, "", "\t")
-	return string(s)
+
+func (c *Config) GetProjectReleases(pjname string, version string) (error, *[]model.Release) {
+	err, projectDetail := c.GetProjectDetails(pjname, version)
+	if err != nil {
+		log.Fatalln("Error while getting project details in GetProjectReleases")
+	}
+	linkedReleases := projectDetail.LinkedReleases
+	// Create an HTTP client
+	client := &http.Client{}
+	var releases []model.Release
+	if len(linkedReleases) == 0 {
+		return errors.New("No release details found for " + pjname + " " + version), nil
+	}
+	// loop through all the release
+	for _, linkedRelease := range linkedReleases {
+		releaselink := linkedRelease.Release
+		req, err := http.NewRequest(http.MethodGet, releaselink, nil)
+		if err != nil {
+			log.Fatalln("error in releaselink")
+		}
+		req.Header.Add(contenttype, apphaljson)
+		req.Header.Add(Authorization, c.Token)
+		res, err := client.Do(req)
+		if err != nil {
+			log.Fatalln("error while client.Do(req) in GetProjectReleases")
+		}
+		databytes, err := io.ReadAll(res.Body)
+		if err != nil {
+			log.Fatalln("Couln't read response body")
+		}
+		var release model.Release
+		err = json.Unmarshal(databytes, &release)
+		if err != nil {
+			log.Fatalln("Error while unmarshalling json")
+		}
+		releases = append(releases, release)
+	}
+	return nil, &releases
 }

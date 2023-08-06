@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -393,4 +394,46 @@ func (c *Config) DeleteProject(pjname string, version string) (error, string) {
 		return errors.New("error while client.Do(req) in DeleteProject for " + pjname + " " + version), ""
 	}
 	return nil, pjname + " " + version + " deleted successfully"
+}
+
+func (c *Config) CreateProject(pjdata model.ProjectCreationModel) (error, *model.ProjectCreated) {
+
+	if pjdata.Name == "" && pjdata.Version == "" {
+		return errors.New("Mandatory data missing: project name or version"), nil
+	}
+
+	// JSON body
+	pjdatabody, err := json.Marshal(pjdata)
+	if err != nil {
+		return err, nil
+	}
+
+	req, err := http.NewRequest(http.MethodPost, c.API+"projects", bytes.NewBuffer(pjdatabody))
+	if err != nil {
+		log.Fatalln("error in request preparation in DeleteProject")
+	}
+	req.Header.Add(contenttype, apphaljson)
+	req.Header.Add(Authorization, c.Token)
+	// Create an HTTP client
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatalln("error while client.Do(req) in CreateProject")
+		return err, nil
+	}
+	if res.StatusCode != http.StatusCreated {
+		return errors.New("error while client.Do(req) in CreateProject"), nil
+	}
+	databytes, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatalln("Couln't read response body")
+	}
+	var projectCreated model.ProjectCreated
+	err = json.Unmarshal(databytes, &projectCreated)
+	if err != nil {
+		log.Fatalln("Error while unmarshalling json")
+		return errors.New("Error while unmarshalling json in CreateProject"), nil
+	}
+
+	return nil, &projectCreated
 }

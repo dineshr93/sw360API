@@ -368,3 +368,29 @@ func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]mod
 	}
 	return nil, &projects
 }
+
+func (c *Config) DeleteProject(pjname string, version string) (error, string) {
+	err, projectlink := c.GetProjectlink(pjname, version)
+	if err != nil {
+		log.Fatalln(err)
+		return errors.New("No projectlink found for " + pjname + " " + version), ""
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, projectlink, nil)
+	if err != nil {
+		log.Fatalln("error in request preparation in DeleteProject")
+	}
+	req.Header.Add(contenttype, apphaljson)
+	req.Header.Add(Authorization, c.Token)
+	// Create an HTTP client
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatalln("error while client.Do(req) in DeleteProject")
+		return err, ""
+	}
+	if res.StatusCode != http.StatusOK {
+		return errors.New("error while client.Do(req) in DeleteProject for " + pjname + " " + version), ""
+	}
+	return nil, pjname + " " + version + " deleted successfully"
+}

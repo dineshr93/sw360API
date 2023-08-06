@@ -74,7 +74,7 @@ func main() {
 		fmt.Println(projectlink)
 	}
 	// ========================================
-	err, releases := apicfg.GetLinkedReleasesTransitive("gradle_single", "1.0")
+	err, releases = apicfg.GetLinkedReleasesTransitive("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
 	} else {

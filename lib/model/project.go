@@ -162,3 +162,59 @@ type Sw360Project struct {
 		} `json:"sw360:releases,omitempty"`
 	} `json:"_embedded,omitempty"`
 }
+type ProjectCreated struct {
+	Name                         string `json:"name,omitempty"`
+	Description                  string `json:"description,omitempty"`
+	Version                      string `json:"version,omitempty"`
+	State                        string `json:"state,omitempty"`
+	SecurityResponsibles         []any  `json:"securityResponsibles,omitempty"`
+	PhaseOutSince                string `json:"phaseOutSince,omitempty"`
+	EnableSvm                    bool   `json:"enableSvm,omitempty"`
+	EnableVulnerabilitiesDisplay bool   `json:"enableVulnerabilitiesDisplay,omitempty"`
+	ProjectType                  string `json:"projectType,omitempty"`
+	Visibility                   string `json:"visibility,omitempty"`
+	Links                        struct {
+		Self struct {
+			Href string `json:"href,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
+	Embedded struct {
+		LeadArchitect struct {
+			Email       string `json:"email,omitempty"`
+			Deactivated bool   `json:"deactivated,omitempty"`
+			Links       struct {
+				Self struct {
+					Href string `json:"href,omitempty"`
+				} `json:"self,omitempty"`
+			} `json:"_links,omitempty"`
+		} `json:"leadArchitect,omitempty"`
+		CreatedBy struct {
+			Email       string `json:"email,omitempty"`
+			Deactivated bool   `json:"deactivated,omitempty"`
+			FullName    string `json:"fullName,omitempty"`
+			Links       struct {
+				Self struct {
+					Href string `json:"href,omitempty"`
+				} `json:"self,omitempty"`
+			} `json:"_links,omitempty"`
+		} `json:"createdBy,omitempty"`
+		Sw360Moderators []struct {
+			Email       string `json:"email,omitempty"`
+			Deactivated bool   `json:"deactivated,omitempty"`
+			Links       struct {
+				Self struct {
+					Href string `json:"href,omitempty"`
+				} `json:"self,omitempty"`
+			} `json:"_links,omitempty"`
+		} `json:"sw360:moderators,omitempty"`
+		Sw360Contributors []struct {
+			Email       string `json:"email,omitempty"`
+			Deactivated bool   `json:"deactivated,omitempty"`
+			Links       struct {
+				Self struct {
+					Href string `json:"href,omitempty"`
+				} `json:"self,omitempty"`
+			} `json:"_links,omitempty"`
+		} `json:"sw360:contributors,omitempty"`
+	} `json:"_embedded,omitempty"`
+}

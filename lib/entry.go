@@ -213,46 +213,14 @@ func (c *Config) GetProjectDetails(pjname string, version string) (error, *model
 	return errors.New("No project details found for " + pjname + " " + version), nil
 }
 
-func (c *Config) GetProject(pjname string, version string) (error, *model.Project) {
-	req, err := http.NewRequest(http.MethodGet, c.API+"projects", nil)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-	req.Header.Add(contenttype, apphaljson)
-	req.Header.Add(Authorization, c.Token)
-
-	// Create an HTTP client
-	client := &http.Client{}
-
-	res, err := client.Do(req)
-	if err != nil {
-		log.Fatalln("error while client.Do(req)")
-	}
-
-	databytes, err := io.ReadAll(res.Body)
-	if err != nil {
-		log.Fatalln("Couln't read response body")
-	}
-
-	var project model.Project
-
-	err = json.Unmarshal(databytes, &project)
-	if err != nil {
-		log.Fatalln("Error while unmarshalling json for ", pjname, version)
-		return errors.New("Error while unmarshalling json for " + pjname + " " + version), nil
-	}
-	return nil, &project
-}
-
 func (c *Config) GetProjectlink(pjname string, version string) (error, string) {
 
-	err, project := GetProject(pjname, version)
+	err, projectDetails := c.GetProjectDetails(pjname, version)
 	if err != nil {
 		return err, ""
 	}
 
-	projectSelfLink := project.Links.Self.Href
+	projectSelfLink := projectDetails.Links.Self.Href
 
 	if len(projectSelfLink) < 5 {
 		return errors.New("Invalid projectSelfLink"), ""

@@ -204,7 +204,7 @@ func (c *Config) GetProjectDetails(pjname string, version string) (error, *model
 
 	for _, p := range Sw360Projects {
 		if strings.ToLower(p.Name) == strings.ToLower(pjname) && strings.ToLower(p.Version) == strings.ToLower(version) {
-			fmt.Println(prettyPrint(p))
+			// fmt.Println(prettyPrint(p))
 			return nil, &p
 		}
 	}

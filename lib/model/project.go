@@ -6,6 +6,15 @@ type LinkedProjects struct {
 	Relation  string `json:"relation"`
 }
 
+type LinkedReleases struct {
+	CreatedBy     string `json:"createdBy"`
+	Release       string `json:"release"`
+	MainlineState string `json:"mainlineState"`
+	Comment       string `json:"comment"`
+	CreatedOn     string `json:"createdOn"`
+	Relation      string `json:"relation"`
+}
+
 type ProjectDetail struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`
@@ -44,15 +53,8 @@ type ProjectDetail struct {
 	ProjectType                   string           `json:"projectType"`
 	Visibility                    string           `json:"visibility"`
 	LinkedProjects                []LinkedProjects `json:"linkedProjects,omitempty"`
-	LinkedReleases                []struct {
-		CreatedBy     string `json:"createdBy"`
-		Release       string `json:"release"`
-		MainlineState string `json:"mainlineState"`
-		Comment       string `json:"comment"`
-		CreatedOn     string `json:"createdOn"`
-		Relation      string `json:"relation"`
-	} `json:"linkedReleases,omitempty"`
-	Links struct {
+	LinkedReleases                []LinkedReleases `json:"linkedReleases,omitempty"`
+	Links                         struct {
 		Self struct {
 			Href string `json:"href"`
 		} `json:"self"`

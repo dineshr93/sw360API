@@ -434,6 +434,6 @@ func (c *Config) CreateProject(pjdata *model.ProjectCreationModel) (error, *mode
 		log.Fatalln("Error while unmarshalling json")
 		return errors.New("Error while unmarshalling json in CreateProject"), nil
 	}
-
+	log.Println("Successfully created Project: " + pjdata.Name + " " + pjdata.Version)
 	return nil, &projectCreated
 }

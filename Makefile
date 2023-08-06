@@ -37,8 +37,7 @@ init:
 	echo "make init n=modulename"
 	mkdir -p ${n} && cd ${n} && go mod init github.com/dineshr93/${n} && cobra init --author "Dinesh Ravi dineshr93@gmail.com" --license Apache-2.0 --viper && go mod tidy && go build -o ./bin/${n} main.go && ./bin/${n} -h && cp ${ROOT_DIR}/Makefile .
 tidy:
-	go clean -cache -modcache -i
-	go mod tidy
+	go clean -cache -modcache -i -r; go mod tidy
 
 add:
 	echo "make add c=commandname"

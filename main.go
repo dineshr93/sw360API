@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strconv"
 
 	lib "github.com/dineshr93/sw360api/lib"
 )
@@ -40,6 +41,18 @@ func main() {
 	} else {
 
 		fmt.Println(data.LinkedProjects)
+	}
+
+	err, releases := apicfg.GetProjectReleases("gradle_single", "1.0")
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+
+		for i, release := range *releases {
+			i++
+
+			fmt.Println(strconv.Itoa(i), release.Name, " ", release.Version)
+		}
 	}
 
 }

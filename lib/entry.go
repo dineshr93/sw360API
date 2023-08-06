@@ -396,7 +396,7 @@ func (c *Config) DeleteProject(pjname string, version string) (error, string) {
 	return nil, pjname + " " + version + " deleted successfully"
 }
 
-func (c *Config) CreateProject(pjdata model.ProjectCreationModel) (error, *model.ProjectCreated) {
+func (c *Config) CreateProject(pjdata *model.ProjectCreationModel) (error, *model.ProjectCreated) {
 
 	if pjdata.Name == "" && pjdata.Version == "" {
 		return errors.New("Mandatory data missing: project name or version"), nil

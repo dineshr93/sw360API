@@ -26,7 +26,7 @@ func main() {
 
 	fmt.Println("No of projects in server: ", apicfg.GetTotalProjects())
 
-	// ========================================
+	fmt.Println("========================================")
 	no, names := apicfg.FindProjectswithName("ada")
 
 	fmt.Println("No of projects matched is: ", no)
@@ -35,7 +35,7 @@ func main() {
 		fmt.Println(name)
 	}
 
-	// ========================================
+	fmt.Println("========================================")
 	// err, data := apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
 	err, ProjectDetail := apicfg.GetProjectDetails("gradle_single", "1.0")
 	if err != nil {
@@ -44,7 +44,7 @@ func main() {
 
 		fmt.Println(ProjectDetail.LinkedProjects)
 	}
-	// ========================================
+	fmt.Println("========================================")
 	err, releases := apicfg.GetLinkedReleases("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
@@ -56,7 +56,7 @@ func main() {
 			fmt.Println(strconv.Itoa(i), release.Name, " ", release.Version)
 		}
 	}
-	// ========================================
+	fmt.Println("========================================")
 	err, projects := apicfg.GetLinkedProjects("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
@@ -66,14 +66,14 @@ func main() {
 			fmt.Println(strconv.Itoa(i), project.Name, " ", project.Version)
 		}
 	}
-	// ========================================
+	fmt.Println("========================================")
 	err, projectlink := apicfg.GetProjectlink("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
 	} else {
 		fmt.Println(projectlink)
 	}
-	// ========================================
+	fmt.Println("========================================")
 	err, releases = apicfg.GetLinkedReleasesTransitive("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
@@ -85,6 +85,6 @@ func main() {
 			fmt.Println(strconv.Itoa(i), release.Name, " ", release.Version)
 		}
 	}
-	// ========================================
-	// ========================================
+	fmt.Println("========================================")
+	fmt.Println("========================================")
 }

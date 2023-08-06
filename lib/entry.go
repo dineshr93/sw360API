@@ -209,8 +209,8 @@ func (c *Config) GetProjectDetails(pjname string, version string) (error, *model
 		}
 	}
 
-	pjd := &model.ProjectDetail{}
-	return errors.New("No project details found for " + pjname + " " + version), pjd
+	// pjd := &model.ProjectDetail{}
+	return errors.New("No project details found for " + pjname + " " + version), nil
 }
 
 func (c *Config) GetLinkedReleases(pjname string, version string) (error, *[]model.Release) {
@@ -252,7 +252,7 @@ func (c *Config) GetLinkedReleases(pjname string, version string) (error, *[]mod
 	return nil, &releases
 }
 
-func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]model.Project) {
+func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]model.Sw360Project) {
 	err, projectDetail := c.GetProjectDetails(pjname, version)
 	if err != nil {
 		log.Fatalln("Error while getting project details in GetLinkedProjects")
@@ -260,7 +260,7 @@ func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]mod
 	linkedProjects := projectDetail.LinkedProjects
 	// Create an HTTP client
 	client := &http.Client{}
-	var projects []model.Project
+	var projects []model.Sw360Project
 	if len(linkedProjects) == 0 {
 		return errors.New("No linked projecDetails found for " + pjname + " " + version), nil
 	}
@@ -281,7 +281,7 @@ func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]mod
 		if err != nil {
 			log.Fatalln("Couln't read response body")
 		}
-		var project model.Project
+		var project model.Sw360Project
 		err = json.Unmarshal(databytes, &project)
 		if err != nil {
 			log.Fatalln("Error while unmarshalling json")

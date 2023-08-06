@@ -218,3 +218,13 @@ type ProjectCreated struct {
 		} `json:"sw360:contributors,omitempty"`
 	} `json:"_embedded,omitempty"`
 }
+type ProjectCreationModel struct {
+	Name          string   `json:"name,omitempty"`
+	ProjectType   string   `json:"projectType,omitempty"`
+	Description   string   `json:"description,omitempty"`
+	PhaseOutSince string   `json:"phaseOutSince,omitempty"`
+	Contributors  []string `json:"contributors,omitempty"`
+	State         string   `json:"state,omitempty"`
+	Version       string   `json:"version,omitempty"`
+	Moderators    []string `json:"moderators,omitempty"`
+}

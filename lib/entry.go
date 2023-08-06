@@ -213,7 +213,7 @@ func (c *Config) GetProjectDetails(pjname string, version string) (error, *model
 	return errors.New("No project details found for " + pjname + " " + version), pjd
 }
 
-func (c *Config) GetProjectReleases(pjname string, version string) (error, *[]model.Release) {
+func (c *Config) GetLinkedReleases(pjname string, version string) (error, *[]model.Release) {
 	err, projectDetail := c.GetProjectDetails(pjname, version)
 	if err != nil {
 		log.Fatalln("Error while getting project details in GetProjectReleases")

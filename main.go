@@ -43,7 +43,7 @@ func main() {
 		fmt.Println(data.LinkedProjects)
 	}
 
-	err, releases := apicfg.GetProjectReleases("gradle_single", "1.0")
+	err, releases := apicfg.GetLinkedReleases("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
 	} else {

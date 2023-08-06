@@ -262,12 +262,12 @@ func (c *Config) GetLinkedProjects(pjname string, version string) (error, *[]mod
 	client := &http.Client{}
 	var projects []model.Project
 	if len(linkedProjects) == 0 {
-		return errors.New("No release details found for " + pjname + " " + version), nil
+		return errors.New("No linked projecDetails found for " + pjname + " " + version), nil
 	}
 	// loop through all the release
 	for _, linkedProject := range linkedProjects {
 		projectlink := linkedProject.Project
-		req, err := http.NewRequest(http.MethodGet, projectlink+"projects?allDetails=true", nil)
+		req, err := http.NewRequest(http.MethodGet, projectlink, nil)
 		if err != nil {
 			log.Fatalln("error in projectlink")
 		}

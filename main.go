@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	lib "github.com/dineshr93/sw360api/lib"
+	"github.com/dineshr93/sw360api/lib/model"
 )
 
 var (
@@ -31,7 +32,7 @@ func main() {
 
 	fmt.Println("No of projects in server: ", apicfg.GetTotalProjects())
 
-	fmt.Println("=================FindProjectswithName=======================")
+	fmt.Println("=================Testing FindProjectswithName=======================")
 	no, names := apicfg.FindProjectswithName("ada")
 
 	fmt.Println("No of projects matched is: ", no)
@@ -40,7 +41,7 @@ func main() {
 		fmt.Println(name)
 	}
 
-	fmt.Println("=================GetProjectDetails=======================")
+	fmt.Println("=================Testing Testing GetProjectDetails=======================")
 	// err, data := apicfg.GetProjectDetails("ZF_Middleware_Program", "IOLITHFBL_0500")
 	err, ProjectDetail := apicfg.GetProjectDetails("gradle_single", "1.0")
 	if err != nil {
@@ -49,7 +50,7 @@ func main() {
 
 		fmt.Println(ProjectDetail.LinkedProjects)
 	}
-	fmt.Println("===================GetLinkedReleases=====================")
+	fmt.Println("===================Testing GetLinkedReleases=====================")
 	err, releases := apicfg.GetLinkedReleases("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
@@ -61,7 +62,7 @@ func main() {
 			fmt.Println(strconv.Itoa(i), release.Name, " ", release.Version)
 		}
 	}
-	fmt.Println("=================GetLinkedProjects=======================")
+	fmt.Println("=================Testing GetLinkedProjects=======================")
 	err, projects := apicfg.GetLinkedProjects("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
@@ -71,14 +72,14 @@ func main() {
 			fmt.Println(strconv.Itoa(i), project.Name, " ", project.Version)
 		}
 	}
-	fmt.Println("================GetProjectlink========================")
+	fmt.Println("================Testing GetProjectlink========================")
 	err, projectlink := apicfg.GetProjectlink("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
 	} else {
 		fmt.Println(projectlink)
 	}
-	fmt.Println("=================GetLinkedReleasesTransitive=======================")
+	fmt.Println("=================Testing GetLinkedReleasesTransitive=======================")
 	err, releases = apicfg.GetLinkedReleasesTransitive("gradle_single", "1.0")
 	if err != nil {
 		log.Fatalln(err)
@@ -90,21 +91,20 @@ func main() {
 			fmt.Println(strconv.Itoa(i), release.Name, " ", release.Version)
 		}
 	}
-	fmt.Println("==================CreateProject======================")
+	fmt.Println("==================Testing CreateProject======================")
+	data := model.ProjectCreationModel{Name: "fromDinesh", Version: "2.0", Description: "Sample Project"}
 
-	// data := model.ProjectCreationModel{Name: "fromDinesh", Version: "2.0", Description: "Sample Project"}
-
-	// err, msg := apicfg.CreateProject(data)
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// fmt.Println(prettyPrint(msg))
-	fmt.Println("=================DeleteProject=======================")
-	// err, msg := apicfg.DeleteProject("fromDinesh", "2.0")
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// fmt.Println(msg)
+	err, msg := apicfg.CreateProject(&data)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println(prettyPrint(msg))
+	fmt.Println("=================Testing DeleteProject=======================")
+	errormsg, msgdelete := apicfg.DeleteProject("fromDinesh", "2.0")
+	if errormsg != nil {
+		log.Fatalln(errormsg)
+	}
+	fmt.Println(msgdelete)
 	fmt.Println("========================================")
 
 	fmt.Println("========================================")
